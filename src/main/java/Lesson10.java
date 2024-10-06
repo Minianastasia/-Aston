@@ -13,7 +13,7 @@ public class Lesson10  {
             emp.printInfo();
         }
 
-        // Пример использования класса Park
+        // Класс Park
         Park park = new Park("Central Park");
         Park.Attraction attraction1 = park.new Attraction("Roller Coaster", "10:00 - 18:00", 500);
         Park.Attraction attraction2 = park.new Attraction("Ferris Wheel", "11:00 - 19:00", 300);
