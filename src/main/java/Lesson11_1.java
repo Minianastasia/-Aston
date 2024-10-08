@@ -1,144 +1,54 @@
-// Класс животное
-abstract class Animal {
-    protected String name;
+class Animal {
+    String name;
 
-    public Animal(String name) {
+    Animal(String name) {
         this.name = name;
     }
 
-    public abstract void run(int distance);
-
-    public abstract void swim(int distance);
-}
-
-// Класс собака
-class Dog extends Animal {
-    private static int dogCount = 0;
-    private static final int MAX_RUN_DISTANCE = 500;
-    private static final int MAX_SWIM_DISTANCE = 10;
-
-    public Dog(String name) {
-        super(name);
-        dogCount++;
+    void run(int distance) {
+        System.out.println(name + " пробежала " + distance + " м.");
     }
 
-    @Override
-    public void run(int distance) {
-        if (distance <= MAX_RUN_DISTANCE) {
-            System.out.println(name + " пробежал " + distance + " м.");
-        } else {
-            System.out.println(name + " не может пробежать " + distance + " м.");
-        }
-    }
-
-    @Override
-    public void swim(int distance) {
-        if (distance <= MAX_SWIM_DISTANCE) {
-            System.out.println(name + " проплыл " + distance + " м.");
-        } else {
-            System.out.println(name + " не может проплыть " + distance + " м.");
-        }
-    }
-
-    public static int getDogCount() {
-        return dogCount;
-    }
-}
-
-// Класс кот
-class Cat extends Animal {
-    private static int catCount = 0;
-    private static final int MAX_RUN_DISTANCE = 200;
-    private boolean isFull;
-
-    public Cat(String name) {
-        super(name);
-        this.isFull = false;
-        catCount++;
-    }
-
-    @Override
-    public void run(int distance) {
-        if (distance <= MAX_RUN_DISTANCE) {
-            System.out.println(name + " пробежал " + distance + " м.");
-        } else {
-            System.out.println(name + " не может пробежать " + distance + " м.");
-        }
-    }
-
-    @Override
-    public void swim(int distance) {
+    void swim(int distance) {
         System.out.println(name + " не умеет плавать.");
     }
+}
 
-    public static int getCatCount() {
-        return catCount;
+class Dog extends Animal {
+    Dog(String name) {
+        super(name);
     }
 
-    public boolean isFull() {
-        return isFull;
-    }
-
-    public void eatFromBowl(FoodBowl bowl) {
-        int foodNeeded = 10;  // Порция еды для кота
-        if (bowl.getFoodAmount() >= foodNeeded) {
-            bowl.decreaseFood(foodNeeded);
-            this.isFull = true;
-            System.out.println(name + " поел. Теперь он сыт.");
+    @Override
+    void swim(int distance) {
+        if (distance <= 10) {
+            System.out.println(name + " проплыла " + distance + " м.");
         } else {
-            System.out.println(name + " не хватает еды, он не будет есть.");
+            System.out.println(name + " не может проплыть так далеко!");
         }
     }
 }
 
-// Класс миска с едой
-class FoodBowl {
-    private int foodAmount;
-
-    public FoodBowl(int foodAmount) {
-        this.foodAmount = foodAmount;
+class Cat extends Animal {
+    Cat(String name) {
+        super(name);
     }
 
-    public int getFoodAmount() {
-        return foodAmount;
-    }
-
-    public void decreaseFood(int amount) {
-        if (foodAmount - amount < 0) {
-            foodAmount = 0;
-        } else {
-            foodAmount -= amount;
-        }
-    }
-
-    public void addFood(int amount) {
-        foodAmount += amount;
-        System.out.println("Добавлено " + amount + " ед. еды. Всего в миске: " + foodAmount);
+    @Override
+    void swim(int distance) {
+        System.out.println(name + " не умеет плавать.");
     }
 }
 
 public class Lesson11_1 {
     public static void main(String[] args) {
-        // Создаем животных
         Dog dog = new Dog("Найда");
-        Cat cat1 = new Cat("Мика");
-        Cat cat2 = new Cat("Лекс");
+        dog.run(500);
+        dog.swim(5); // Пример плыть на 5 метров
+        dog.swim(15); // Пример плыть на 15 метров
 
-        // Действия животных
-        dog.run(150);
-        cat1.run(200);
-        dog.swim(5);
-        cat2.swim(10);
-
-        // Миска с едой
-        FoodBowl bowl = new FoodBowl(20);
-
-        // Коты пытаются поесть
-        cat1.eatFromBowl(bowl);
-        cat2.eatFromBowl(bowl);
-
-        // Вывод количества созданных животных
-        System.out.println("Создано собак: " + Dog.getDogCount());
-        System.out.println("Создано котов: " + Cat.getCatCount());
+        Cat cat = new Cat("Лекс");
+        cat.run(200);
+        cat.swim(10); // Кот не умеет плавать
     }
 }
